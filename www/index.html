@@ -27,109 +27,47 @@
       }
     </style>
 
+    <!--MAP GOOGLE MAP API with my API_KEY-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhqFQF2QvuleiNksrQltbkCWEip44uNqo&callback=initMap"
+    async defer></script> 
     
     
 </head>
 
 <body>
-  
-	<div data-role="page" id="page1">
-    <div data-role="header" id="header1">
-        <h1>Location</h1>
-    </div>
-
     
-    <div data-role="main" class="ui-content">
-        
-        <button id="getLocationButton">Get Location</button>
-        
-      	<label for="longtext">Longitude:</label>
-      	<input type="text" name="longtext" id="longtext" value=""  />
-        
-      	<label for="lattext">Latitude:</label>
-      	<input type="text" name="lattext" id="lattext" value=""  />
 
-        <label for="time">Time (formatted toTimeString):</label>
-      	<input type="text" name="time" id="time" value=""  />
-  
-        <!--EXTRAS-->
-        
-        <label for="acctext">Accuracy:</label>
-      	<input type="text" name="acctext" id="acctext" value=""  />
-        
-        <label for="alttext">Altitude:</label>
-      	<input type="text" name="alttext" id="alttext" value=""  />
-        
-        <label for="altacctext">Altitude accuracy:</label>
-      	<input type="text" name="altacctext" id="altacctext" value=""  />
-        
-        <label for="headtext">Heading:</label>
-      	<input type="text" name="headtext" id="headtext" value=""  />
-        
-        <label for="speedtext">Speed:</label>
-      	<input type="text" name="speedtext" id="headtespeedtextxt" value=""  />
- 
-    </div>
-  
 
-    <div data-role="footer">
-        <h1>Footer Text</h1>
-    </div>  
-</div> 
+<div data-role="page" id="pageone">
     
-// PAGE 2 - COMPASS /////////////////////////////////////////////  
-    
-<div data-role="page" id="page2">
-    <div data-role="header" id="header2">
-        <h1>Compass</h1>
-    </div>
-
-    
-    <div data-role="main" class="ui-content">
-        <form>
-            <label for="flip-loc"><b>Turn On/Off location monitoring:</b></label>
+    <div data-role="panel" id="navpanel" data-display="overlay">
+        <h2>Select...</h2>
+        <input type="button" value="Home" id="btnhome">
+        <input type="button" value="Cathedral" id="btncathedral">
+        <input type="button" value="Uni St John's" id="btnuni">
+        <input type="button" value="Boston" id="btnboston">
+        <p></p>
+        <input type="button" value="Current location" id="btnhere" data-theme="b">
+        <p></p>
+        <label for="flip-loc"><b>Live monitoring:</b></label>
             <input data-role="flipswitch" name="flip-loc" id="flip-loc" type="checkbox" >
-            
-        </form>
-        
-        <label for="clongtext">Longitude:</label>
-      	<input type="text" name="clongtext" id="clongtext" value=""  />
-        
-      	<label for="clattext">Latitude:</label>
-      	<input type="text" name="clattext" id="clattext" value=""  />
 
-        <label for="ctime">Time (formatted toTimeString):</label>
-      	<input type="text" name="ctime" id="ctime" value=""  />
-        
-        <p>Watch ID = <span id="runningText"></span></p>
+    </div>
+    
+    
+    <div data-role="header">
+        <a href="#navpanel" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left ui-icon-bars ui-btn-icon-left" rel="external">Locations</a>
+        <h1>Google Maps</h1>
+    </div>
 
- 
+    
+    <div data-role="content" id="content">
+        <div id="map_canvas" style="height:100%">
     </div>
   
 
     <div data-role="footer" data-position="fixed">
-        <h1>Footer Text</h1>
-    </div>  
-</div> 
-
-// PAGE 3 - MAP ///////////////////////////////////////////// 
-    
-<div data-role="page" id="page3">
-    <div data-role="header" id="header3">
-        <h1>Map</h1>
-    </div>
-
-    
-    <div data-role="main" class="ui-content">
-        
-        <!--    DIV FOR MAP    -->
-        <div id="map">Map placeholder</div> 
- 
-    </div>
-  
-
-    <div data-role="footer" data-position="fixed">
-        <h1>Footer Text</h1>
+        <h1>Monitoring <span id="monitorText">OFF</span></h1>
     </div>  
 </div> 
 

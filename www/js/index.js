@@ -1,122 +1,126 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-    //alert("READY");
-    if( navigator.splashscreen && navigator.splashscreen.hide ) {   // Cordova API detected
-        navigator.splashscreen.hide() ;
-    }
     
-    // Listener for button
-    $('#getLocationButton').on("click", getPosition);
+    runOnLoad();
     
-    // Swip page nav
-    $( document ).on( "swipeleft", "#header1", function() {
-        $.mobile.changePage('#page2', { transition: "slide"} );
+    // Button listeners
+    $('#btnhome').on("click", function(){
+        $("[data-role=panel]").panel("close");
+        setloc(lochome, 16);
     });
-    $( document ).on( "swiperight", "#header2", function() {
-        $.mobile.changePage('#page1', { transition: "slide",
-            reverse: true } );
+    $('#btncathedral').on("click", function(){
+        $("[data-role=panel]").panel("close");
+        setloc(locCathedral, 17);
     });
-    $( document ).on( "swipeleft", "#header2", function() {
-        $.mobile.changePage('#page3', { transition: "slide" } );
+    $('#btnuni').on("click", function(){
+        $("[data-role=panel]").panel("close");
+        setloc(locUni, 16);
     });
-    $( document ).on( "swiperight", "#header3", function() {
-        $.mobile.changePage('#page2', { transition: "slide",
-            reverse: true } );
+    $('#btnboston').on("click", function(){
+        $("[data-role=panel]").panel("close");
+        setloc(locboston, 12);
     });
     
-    // COMPASS - toggle switch to turn Geolocation.watchPosition() on/off
-    $( document ).on( "change", "#flip-loc", watchPosToggle);
+    $('#btnhere').on("click", function(){
+        $("[data-role=panel]").panel("close");
+        getPosition();
+    });
     
-    // MAP - listener for page 3 load
-    $( document ).on( "pagecreate", "#page3", page3load);
-
+    // LIVE MOITORING - toggle switch to turn Geolocation.watchPosition() on/off
+    $("#flip-loc").on( "change", function(){
+        $("[data-role=panel]").panel("close");
+        handleToggle();
+    }); 
     
 }
 
+
+var map;
+var locHome, locCathedral, locUni, locboston;
+var markHome, markCathedral, markUni, markboston;
+
+function runOnLoad(){
+    // MAP - Set content window size
+    $('#content').height(getRealContentHeight());
+    // This is the minimum zoom level that we'll allow
+    var initZoomLevel = 15;
+    
+    // MAP - Create location LatLng's
+    lochome = new google.maps.LatLng(52.215322, -2.347495);
+    locCathedral = new google.maps.LatLng(52.188479, -2.221094);
+    locUni = new google.maps.LatLng(52.198094, -2.242767);
+    locboston = new google.maps.LatLng(42.360082, -71.058880);
+    
+    
+
+
+    map = new google.maps.Map(document.getElementById('map_canvas'), {
+        zoom: initZoomLevel,
+        center: lochome,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    
+    // MAP - Create markers
+    markHome = new google.maps.Marker({
+        position: lochome,
+        title: 'Home'
+    });  
+    markCathedral = new google.maps.Marker({
+        position: locCathedral,
+        title: 'Cathedral'
+    });  
+    markUni = new google.maps.Marker({
+        position: locUni,
+        title: 'St Johns Campus'
+    });
+    markboston = new google.maps.Marker({
+        position: locboston,
+        title: 'Boston'
+    });
+    
+    // MAP - Place markers
+    markHome.setMap(map);
+    markCathedral.setMap(map);
+    markUni.setMap(map);
+    markboston.setMap(map);
+    
+    
+
+}
 
 //Call this function when you want to get the current position
 function getPosition() {
-	//change time box to show updated message
-	$('#time').val("Getting data...");
-	
-	//instruct location service to get position with appropriate callbacks
 	navigator.geolocation.getCurrentPosition(successPosition, failPosition);
 }
-
-// stored position for debugging purposes
-var permpos;
 
 //called when the position is successfully determined
 function successPosition(position) {
     
-	//You can find out more details about what the position obejct contains here:
-	// http://www.w3schools.com/html/html5_geolocation.asp
-	
-	//lets get some stuff out of the position object
-    var longitude = position.coords.longitude;
-	var latitude = position.coords.latitude;
-    var accuracy = position.coords.accuracy;
-    var altitude = position.coords.altitude;
-    var altacc = position.coords.altitudeAccuracy;
-    var heading = position.coords.heading;
-    var speed = position.coords.speed;
-    
-    // DATE + TIME
-    // position.timestamp returuns type domTimeStamp
-	var domTimeStamp = position.timestamp;
-    // convert domTimeStamp to Date which browsers recognise
-    var date = new Date(domTimeStamp);
-    // convert to formated time string
-    var time = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
-    
-   
-    // Display position data
-    $('#longtext').val(longitude);
-	$('#lattext').val(latitude);
-    
-    // Display time
-    $('#time').val("Recieved data at " + time);
-    
-    // Display extras
-	$('#acctext').val(accuracy);
-    $('#alttext').val(altitude);
-    $('#altacctext').val(altacc);
-    $('#headtext').val(heading);
-    $('#speedtext').val(speed);
-    
+    var long = position.coords.longitude;
+	var lat = position.coords.latitude;
+    var current = new google.maps.LatLng(lat, long);
+    setloc(current, 17);
 }
 
-//called if the position is not obtained correctly
-function failPosition(error) {
-	//change time box to show updated message
-	$('#timeF').val("Error getting data: " + error);
-	
+function failPosition(err) {
+    alert('ERROR(' + err.code + '): ' + err.message);
+  console.warn('ERROR(' + err.code + '): ' + err.message);
 }
 
-//////////// COMPASS ///////////
+function setloc(loc, zoom){
+    //alert("ASDSF");
+    map.setCenter(loc);
+    map.setZoom(zoom);
+}
 
-// boolean recording if geoWatch is on or off
-var geoWatchRunning = false;
+//////////// LIVE MONITORING ///////////
+
 // watchPosition ID returned by the current geoWatch - use to .clearWatch()
 var watchID;
 
-
-//var localOptions = {
-//    enableHighAccuracy : true,
-//		timeout : Infinity,
-//		maximumAge : 0
-//};
-
-//var locationOptions = { 
-//	maximumAge: 10000, 
-//	timeout: 6000, 
-//	enableHighAccuracy: true 
-//};
-
-
 //Respond to changes in location moitoring toggle switch
-function watchPosToggle() {
+function handleToggle() {
     // if toggle true, start geoWatch, otherwise turn off
     locWatchOn = $("#flip-loc").prop("checked");
     if (locWatchOn)
@@ -128,7 +132,8 @@ function watchPosToggle() {
 }
 
 function startWatch(){
-    // Set optiond
+
+    // Set options
     var locationOptions = { 
         maximumAge: 10000, 
         timeout: 6000, 
@@ -136,42 +141,26 @@ function startWatch(){
     };
     // Set geoWatch listener and save ID
     watchID = navigator.geolocation.watchPosition(success, fail);//, locationOptions);
+    $('#monitorText').text("ON");
 }
 
 
 function stopWatch(){
-//    if (watchID) {
+
+    if (watchID) {
 		navigator.geolocation.clearWatch(watchID);
 		watchID = null;
-//	}
-    
-    $('#clongtext').val("Monitoring OFF");
-	$('#clattext').val("Monitoring OFF");
-    // Display time
-    $('#ctime').val("Monitoring OFF");
-    $('#runningText').text(watchID);
-
+	}
+    $('#monitorText').text("OFF");
 }
 
 function success(pos) {
     // get data
     var clong = pos.coords.longitude;
 	var clat = pos.coords.latitude;
-    // DATE + TIME
-    // position.timestamp returuns type domTimeStamp
-	var cdomTimeStamp = pos.timestamp;
-    // convert domTimeStamp to Date which browsers recognise
-    var cdate = new Date(cdomTimeStamp);
-    // convert to formated time string
-    var ctime = cdate.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+    var current = new google.maps.LatLng(clat, clong);
     
-    // Display position data
-    $('#clongtext').val(clong);
-	$('#clattext').val(clat);
-    // Display time
-    $('#ctime').val("Recieved data at " + ctime);
-
-    $('#runningText').text(watchID);
+    map.setCenter(current);
 }
 
 function fail(err) {
@@ -179,12 +168,21 @@ function fail(err) {
   console.warn('ERROR(' + err.code + '): ' + err.message);
 }
 
-////////////// MAP ///////////////
-
-function page3load() {
-    //alert("PAGE 3");
-    $('#map').text("SEE SEPERATE MAP APP");
+function setliveloc(loc){
+    map.setCenter(loc);
 }
 
+                              
+// MAP - function to get content window height
+function getRealContentHeight() {
+	var header = $.mobile.activePage.find("div[data-role='header']:visible");
+	var footer = $.mobile.activePage.find("div[data-role='footer']:visible");
+	var content = $.mobile.activePage.find("div[data-role='content']:visible:visible");
+	var viewport_height = $(window).height();
 
-
+	var content_height = viewport_height - header.outerHeight() - footer.outerHeight();
+	if((content.outerHeight() - header.outerHeight() - footer.outerHeight()) <= viewport_height) {
+		content_height -= (content.outerHeight() - content.height());
+	} 
+	return content_height;
+}
