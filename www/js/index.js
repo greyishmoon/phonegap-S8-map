@@ -38,7 +38,7 @@ function onDeviceReady() {
 
 var map;
 var locHome, locCathedral, locUni, locboston;
-var markHome, markCathedral, markUni, markboston;
+var markHome, markCathedral, markUni, markboston, markCurrent;
 
 function runOnLoad(){
     // MAP - Set content window size
@@ -79,12 +79,17 @@ function runOnLoad(){
         title: 'Boston'
     });
     
+    markCurrent = new google.maps.Marker({
+        position: locboston,
+        title: 'You are here!'
+    });
+    
     // MAP - Place markers
     markHome.setMap(map);
     markCathedral.setMap(map);
     markUni.setMap(map);
     markboston.setMap(map);
-    
+    markCurrent.setMap(map);
     
 
 }
@@ -100,6 +105,7 @@ function successPosition(position) {
     var long = position.coords.longitude;
 	var lat = position.coords.latitude;
     var current = new google.maps.LatLng(lat, long);
+    markCurrent.position = current;
     setloc(current, 17);
 }
 
