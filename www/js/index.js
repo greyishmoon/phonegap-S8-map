@@ -105,7 +105,7 @@ function successPosition(position) {
     var long = position.coords.longitude;
 	var lat = position.coords.latitude;
     var current = new google.maps.LatLng(lat, long);
-    markCurrent.position = current;
+    markCurrent.setPosition(current);
     setloc(current, 17);
 }
 
