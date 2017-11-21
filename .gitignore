@@ -2,6 +2,10 @@
 Thumbs.db
 ehthumbs.db
 
+# Phonegap local build
+platforms/
+plugins/
+
 # Folder config file
 Desktop.ini
 
