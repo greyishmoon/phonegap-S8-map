@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Week 8 Maps</title>
-    
+
     <!-- Mobile screen size fix   -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=0" />
 
@@ -11,16 +12,16 @@
     <script src="jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
     <script src="js/index.js"></script>
     <link href="jquery-mobile/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css">
-    
-<!--    STYLING FOR MAP  -->
+
+    <!--    STYLING FOR MAP  -->
     <style>
-      /* Always set the map height explicitly to define the size of the div
+        /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-        
-      #content {
+        #map {
+            height: 100%;
+        }
+
+        #content {
             padding: 0;
             position: absolute !important;
             top: 40px !important;
@@ -31,63 +32,44 @@
     </style>
 
     <!--MAP GOOGLE MAP API with my API_KEY-->
+    <!--
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhqFQF2QvuleiNksrQltbkCWEip44uNqo&callback=initMap"async defer></script>-->
+    <!--  Removed callback - initMap run from 'pageinit' listener with timeout delay -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhqFQF2QvuleiNksrQltbkCWEip44uNqo"></script>
-    
-    
 </head>
 
 <body>
-    
-<!--
- <div data-role="page" id="pageone">
+
+    <div data-role="page" id="pageone">
+
+        <div data-role="panel" id="navpanel" data-display="overlay">
+            <h2>Select...</h2>
+            <input type="button" value="Home" id="btnhome">
+            <input type="button" value="Cathedral" id="btncathedral">
+            <input type="button" value="Uni St John's" id="btnuni">
+            <input type="button" value="Boston" id="btnboston">
+            <p></p>
+            <input type="button" value="Current location" id="btnhere" data-theme="b">
+            <p></p>
+            <label for="flip-loc"><b>Live monitoring:</b></label>
+            <input data-role="flipswitch" name="flip-loc" id="flip-loc" type="checkbox">
+        </div>
+
         <div data-role="header">
+            <a href="#navpanel" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left ui-icon-bars ui-btn-icon-left" rel="external">Locations</a>
             <h1>Google Maps</h1>
         </div>
 
         <div data-role="content" id="content">
             <div id="map"></div>
         </div>
-    </div>
--->
-    
-    
-<!--
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhqFQF2QvuleiNksrQltbkCWEip44uNqo&callback=initMap"
-    async defer></script>
--->
 
-<div data-role="page" id="pageone">
-    
-    <div data-role="panel" id="navpanel" data-display="overlay">
-        <h2>Select...</h2>
-        <input type="button" value="Home" id="btnhome">
-        <input type="button" value="Cathedral" id="btncathedral">
-        <input type="button" value="Uni St John's" id="btnuni">
-        <input type="button" value="Boston" id="btnboston">
-        <p></p>
-        <input type="button" value="Current location" id="btnhere" data-theme="b">
-        <p></p>
-        <label for="flip-loc"><b>Live monitoring:</b></label>
-            <input data-role="flipswitch" name="flip-loc" id="flip-loc" type="checkbox" >
-
+        <div data-role="footer" data-position="fixed">
+            <h1>Monitoring <span id="monitorText">OFF</span></h1>
+        </div>
+        
     </div>
-    
-    
-    <div data-role="header">
-        <a href="#navpanel" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left ui-icon-bars ui-btn-icon-left" rel="external">Locations</a>
-        <h1>Google Maps</h1>
-    </div>
-
-    
-    <div data-role="content" id="content">
-        <div id="map"></div>
-    </div>
-  
-
-    <div data-role="footer" data-position="fixed">
-        <h1>Monitoring <span id="monitorText">OFF</span></h1>
-    </div>  
-</div> 
 
 </body>
+
 </html>
