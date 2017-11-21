@@ -8,13 +8,13 @@ function onLoad() {
     // delay to ensure map loads fully
     setTimeout(function () {
         initMap();
-    }, 1000);
+    }, 2000);
     //    initMap();
 }
 
 
 function onDeviceReady() {
-
+alert("onDeviceReady");
     // Button listeners
     $('#btnhome').on("click", function () {
         $("[data-role=panel]").panel("close");
@@ -50,9 +50,7 @@ var locHome, locCathedral, locUni, locboston;
 var markHome, markCathedral, markUni, markboston;
 
 function initMap() {
-
-    //    $('#content').height(getRealContentHeight());
-
+alert("initMap");
     var initZoomLevel = 15;
 
     // MAP - Create location LatLng's
@@ -178,21 +176,6 @@ function fail(err) {
 
 function setliveloc(loc) {
     map.setCenter(loc);
-}
-
-
-// MAP - function to get content window height
-function getRealContentHeight() {
-    var header = $.mobile.activePage.find("div[data-role='header']:visible");
-    var footer = $.mobile.activePage.find("div[data-role='footer']:visible");
-    var content = $.mobile.activePage.find("div[data-role='content']:visible:visible");
-    var viewport_height = $(window).height();
-
-    var content_height = viewport_height - header.outerHeight() - footer.outerHeight();
-    if ((content.outerHeight() - header.outerHeight() - footer.outerHeight()) <= viewport_height) {
-        content_height -= (content.outerHeight() - content.height());
-    }
-    return content_height;
 }
 
 
