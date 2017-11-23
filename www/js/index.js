@@ -8,7 +8,7 @@ function onLoad() {
     // delay to ensure map loads fully
     setTimeout(function () {
         initMap();
-    }, 2000);
+    }, 1000);
     //    initMap();
 }
 
@@ -50,7 +50,7 @@ var locHome, locCathedral, locUni, locboston;
 var markHome, markCathedral, markUni, markboston;
 
 function initMap() {
-alert("initMap");
+    alert("initMap");
     var initZoomLevel = 15;
 
     // MAP - Create location LatLng's
