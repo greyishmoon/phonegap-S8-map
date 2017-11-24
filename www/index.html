@@ -2,10 +2,9 @@
 <html>
 
 <head>
-    <title>Week 8 Maps</title>
-
-    <!-- Mobile screen size fix   -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=0" />
+    <meta charset="UTF-8">
+    <!--  Mobile screen size control  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="cordova.js"></script>
     <script src="jquery-mobile/jquery-1.8.3.min.js"></script>
@@ -13,29 +12,16 @@
     <script src="js/index.js"></script>
     <link href="jquery-mobile/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css">
 
-    <!--    STYLING FOR MAP  -->
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-        #map {
-            height: 100%;
-        }
+    <!--  Google maps API call + key  -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhqFQF2QvuleiNksrQltbkCWEip44uNqo" defer></script>
 
+    <!--  Maximise content div - map div dynamically sized on run (getRealContentHeight())  -->
+    <style>
         #content {
-            padding: 0;
-            position: absolute !important;
-            top: 40px !important;
-            right: 0;
-            bottom: 40px !important;
-            left: 0 !important;
+            padding: 0 !important;
         }
     </style>
 
-    <!--MAP GOOGLE MAP API with my API_KEY-->
-    <!--
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhqFQF2QvuleiNksrQltbkCWEip44uNqo&callback=initMap"async defer></script>-->
-    <!--  Removed callback - initMap run from 'pageinit' listener with timeout delay -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhqFQF2QvuleiNksrQltbkCWEip44uNqo"></script>
 </head>
 
 <body>
@@ -57,17 +43,17 @@
 
         <div data-role="header">
             <a href="#navpanel" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left ui-icon-bars ui-btn-icon-left" rel="external">Locations</a>
-            <h1>Google Maps</h1>
+            <h3>Google Maps</h3>
         </div>
 
         <div data-role="content" id="content">
-            <div id="map"></div>
+            <div id="map_canvas" style="height:100%"></div>
         </div>
 
         <div data-role="footer" data-position="fixed">
-            <h1>Monitoring <span id="monitorText">OFF</span></h1>
+            <h3>Monitoring <span id="monitorText">OFF</span></h3>
         </div>
-        
+
     </div>
 
 </body>

@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<widget xmlns   = "http://www.w3.org/ns/widgets"
-    xmlns:gap   = "http://phonegap.com/ns/1.0"
-    id          = "mob.app.dev.maps"
-    versionCode = "1"
-    version     = "1.0.1" >
 
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="mob.app.dev.maps" versionCode="1" version="1.0.8">
 
-  <name>Week 8 - Maps</name>
+    <name>Week 8 - Maps</name>
 
-  <description>
-     A sample application that demonstrates google maps
-  </description>
- 
+    <description>
+        A sample application that demonstrates google maps with jQuery Mobile dynamic div sizing
+    </description>
+
+    <author href="worcester.ac.uk" email="c.blythe@worc.ac.uk">
+        WBS Computing
+    </author>
+
+    <preference name="permissions" value="none" />
+
+    <access origin="*" />
+
+    <plugin name="cordova-plugin-whitelist" version="1" />
+
+    <!--Android 6.0 or newer: Plugin to support runtime permissions-->
     <plugin name="cordova-plugin-geolocation-android-activator" />
-    <plugin name="cordova-plugin-geolocation"  />
 
-    <preference name="permissions"                value="none"/>   
-	
-	<access origin="*"/>
-    
-    
+    <!--Plugin to support gathering of location data-->
+    <plugin name="cordova-plugin-geolocation" />
+
     <config-file platform="ios" parent="NSLocationWhenInUseUsageDescription" mode="merge">
-      <array>
+        <array>
             <key>NSLocationWhenInUseUsageDescription</key>
             <string>My app requires access to your location when the screen is on and the app is displayed.</string>
-      </array>
+        </array>
     </config-file>
-    
 
-    
-    
 </widget>
